@@ -13,14 +13,14 @@ c.execute('''CREATE TABLE item (
                 Item_type text
                 )''')
 
-c.execute('''CREATE TABLE employee(
-            Employee_ID integer,
-            Full_name text,
-            Username text,
-            Password text,
-            Email text,
-            Items_loaned integer,
-            employee_type text
+c.execute('''CREATE TABLE employee (
+            employee_ID integer,
+            full_name text,
+            email text,
+            password text,
+            date_of_birth text,
+            employee_type text,
+            loan_total_cost integer
             )''')
 
 conn.close()

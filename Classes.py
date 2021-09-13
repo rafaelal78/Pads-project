@@ -17,6 +17,16 @@ class electronic(item):
         super().__init__(item_name, item_cost, number_of_items, DoP, threshold_value, description)
         self.IT = "electronic"
 
+class employee:
+    def __init__(self, ID, name, email, password, date_of_birth, employee_type):
+        self.ID = ID
+        self.name = name
+        self.email = email
+        self.password = password
+        self.DoB = date_of_birth
+        self.ET = employee_type
+        self.loan_total_cost = 0        
+        
 class PIMS:
     def __init__(self):
         self.items_list = []

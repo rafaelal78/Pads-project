@@ -89,12 +89,100 @@ def registration_win():
 
 def retrieve_PW_win():
     RPW = Tk()
+    RPW.geometry("360x210")
+    RPW.title("Retrieve Password")
+
+    def details_wind(email):
+        email_entry.delete(0, "end")
+
+        top = Toplevel()
+        top.geometry("270x200")
+
+        get_emps_ID = c.execute("SELECT employee_ID FROM employee WHERE email=:email",
+                                {'email': email}).fetchone()
+
+        get_emps_name = c.execute("SELECT full_name FROM employee WHERE email=:email",
+                                  {'email': email}).fetchone()
+
+        get_emps_email = c.execute("SELECT email FROM employee WHERE email=:email",
+                                   {'email': email}).fetchone()
+
+        get_emps_pas = c.execute("SELECT password FROM employee WHERE email=:email",
+                                 {'email': email}).fetchone()
+
+        emps_ID_text = "Employee ID: " + str(get_emps_ID[0])
+        emps_name_text = "Employee full name: " + str(get_emps_name[0])
+        emps_email_text = "Employee email: " + str(get_emps_email[0])
+        emps_pas_text = "Employee password: " + str(get_emps_pas[0])
+
+        def back_to_login_window():
+            top.destroy()
+            RPW.destroy()
+            login_win()
+
+        def close_details_wind():
+            top.destroy()
+
+        blank_0 = Label(top, pady=10)
+        emp_id = Label(top, text=emps_ID_text)
+        emp_name = Label(top, text=emps_name_text)
+        emp_email = Label(top, text=emps_email_text)
+        emp_pas = Label(top, text=emps_pas_text)
+        blank_1 = Label(top, pady=10)
+
+        login_win_button = Button(top, text="Login Window", command=back_to_login_window)
+        close_win_button = Button(top, text="Close", command=close_details_wind)
+
+        blank_0.grid(row=0, column=0, columnspan=2)
+        emp_id.grid(row=1, column=0, columnspan=2, stick=W)
+        emp_name.grid(row=2, column=0, columnspan=2, stick=W)
+        emp_email.grid(row=3, column=0, columnspan=2, stick=W)
+        emp_pas.grid(row=4, column=0, columnspan=2, stick=W)
+        blank_1.grid(row=5, column=0, columnspan=2, stick=W)
+        login_win_button.grid(row=6, column=0)
+        close_win_button.grid(row=6, column=1, padx=70)
+
+    def ver_email():
+        Label(RPW, text="                                ").grid(row=2, column=1, sticky=N)
+        if email_entry.get() != "":
+            if c.execute("SELECT email FROM employee WHERE email=:email",
+                                {'email': email_entry.get()}).fetchone()[0] is not None:
+                details_wind(email_entry.get())
+            else:
+                Label(RPW, text="Invalid Email", fg="red").grid(row=2, column=1, sticky=N)
+        else:
+            Label(RPW, text="Invalid Email", fg="red").grid(row=2, column=1, sticky=N)
+
+
+    blank0 = Label(RPW)
+    email_text = Label(RPW, text="Email")
+
+    email_entry = Entry(RPW, width=45)
+
+    blank1 = Label(RPW)
+    confirm_button = Button(RPW, text="Confirm", command=ver_email)
+
+    blank0.grid(row=0, column=0, pady=30)
+    email_text.grid(row=1, column=0, padx=10, sticky=W)
+    email_entry.grid(row=1, column=1)
+    blank1.grid(row=2, column=0, pady=20)
+    confirm_button.grid(row=3, column=1)
 
     RPW.mainloop()
-
+    
 def admin_win():
     AP = Tk()
 
     AP.mainloop()
+
+def manager_win():
+    MW = Tk()
+
+    MW.mainloop()
+
+def staff_win():
+    SW = Tk()
+
+    SW.mainloop()
 
 login_win()

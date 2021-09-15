@@ -2,6 +2,17 @@ from tkinter import *
 from dum import *
 from PIL import ImageTk, Image
 
+conn = sqlite3.connect("PIMS")
+c = conn.cursor()
+
+def insert_emp(emp):
+    with conn:
+        c.execute("INSERT INTO employee VALUES"
+                  "(:employee_ID, :full_name, :email, :password, :date_of_birth, :employee_type, :loan_total_cost)",
+                  {'employee_ID': emp.ID , "full_name": emp.name, "email": emp.email,
+                   "password": emp.password, "date_of_birth": emp.DoB,
+                   "employee_type": emp.ET, "loan_total_cost": 0})
+
 def login_win():
     login = Tk()
     login.geometry("500x600")
@@ -186,3 +197,5 @@ def staff_win():
     SW.mainloop()
 
 login_win()
+
+conn.close()

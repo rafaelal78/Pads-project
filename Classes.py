@@ -1,21 +1,23 @@
 class item:
-    def __init__(self, item_name, item_cost, number_of_items, DoP,threshold_value, description):
+    def __init__(self, item_ID, item_name, item_cost, number_of_items, DoP, threshold_value,
+                 description, item_type):
+        self.ID = item_ID
         self.name = item_name
         self.cost = item_cost
         self.number = number_of_items
         self.DoP = DoP  # Date of Purchase
         self.TV = threshold_value
         self.DP = description
+        self.IT = item_type
 
-class stationary(item):
-    def __init__(self, item_name, item_cost, number_of_items, DoP, threshold_value, description):
-        super().__init__(item_name, item_cost, number_of_items, DoP, threshold_value, description)
-        self.IT = "stationary"
+class loaned_item:
+    def __init__(self, item_ID, employee_ID, date_of_request, request_amount):
+        self.IID = item_ID
+        self.EID = employee_ID
+        self.DoR = date_of_request
+        self.RA = request_amount
 
-class electronic(item):
-    def __init__(self, item_name, item_cost, number_of_items, DoP, threshold_value, description):
-        super().__init__(item_name, item_cost, number_of_items, DoP, threshold_value, description)
-        self.IT = "electronic"
+# this would've been done in inheritance but sqlite lib wouldn't allow it
 
 class employee:
     def __init__(self, ID, name, email, password, date_of_birth, employee_type):
@@ -25,23 +27,4 @@ class employee:
         self.password = password
         self.DoB = date_of_birth
         self.ET = employee_type
-        self.loan_total_cost = 0        
-        
-class PIMS:
-    def __init__(self):
-        self.items_list = []
-
-    def add_stationary(self, IN, IC, NoI, DoP, THV, D):
-        stationary_item = stationary(IN, IC, NoI, DoP, THV, D)
-        self.item_list += stationary_item
-
-    def add_electronic(self):
-        electronic_item = electronic(IN, IC, NoI, DoP, THV, D)
-        self.item_list += electronic_item
-
-    def delete(self):
-        pass
-
-#     def modify(self):
-#         pass
-
+        self.loan_total_cost = 0
